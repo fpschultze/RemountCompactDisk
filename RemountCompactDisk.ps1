@@ -12,7 +12,7 @@
 .EXAMPLE
   .\RemountCompactDisk.ps1
 
-  Use Z: as starting drive letter.
+  Use the default (Z:) as starting drive letter.
 
 .EXAMPLE
   .\RemountCompactDisk.ps1 -NewDriveLetter 'Y:'
@@ -47,7 +47,7 @@ function Get-VolumeMountPoint ($DriveLetter)
   $output = (mountvol.exe $DriveLetter /L).Trim()
   if ($LASTEXITCODE -ne 0)
   {
-    throw ('Dismount-Volume: {0}' -f $output)
+    throw ('{0}: {1}' -f $MyInvocation.InvocationName, $output)
   }
   $output
 }
@@ -57,7 +57,7 @@ function Dismount-Volume ($DriveLetter)
   $output = mountvol.exe $DriveLetter /D
   if ($LASTEXITCODE -ne 0)
   {
-    throw ('Dismount-Volume: {0}' -f $output)
+    throw ('{0}: {1}' -f $MyInvocation.InvocationName, $output)
   }
   $true
 }
@@ -67,7 +67,7 @@ function Mount-Volume ($DriveLetter, $MountPoint)
   $output = mountvol.exe $DriveLetter $MountPoint
   if ($LASTEXITCODE -ne 0)
   {
-    throw ('Mount-Volume: {0}' -f $output)
+    throw ('{0}: {1}' -f $MyInvocation.InvocationName, $output)
   }
   $true
 }
